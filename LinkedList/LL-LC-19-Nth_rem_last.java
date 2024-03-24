@@ -1,3 +1,5 @@
+//Leetcode: 19 Remove Nth Node From Last
+
 class Node{
 	public int data;
 	public Node next = null;
@@ -42,64 +44,47 @@ class LinkedList{
 		}
 		return res.toString();
 	}
-
-//Delete Start
-
-	public void deleteStart(){
-		if(isEmpty()){
+//Solution Leetcode
+	public void removeNth(int n){
+		if(isEmpty())return;
+		if(head==null){
 			return;
 		}
-		Node temp = head;
-		head = head.next;
-		temp.next = null;
-	}
-//Delete End
-	
-	public void deleteEnd(){
-		if(head == tail){
+		Node fast =head;
+		Node curr = head;
+		Node prev=null;
+		while(n>1 && fast!=null){
+			fast = fast.next;
+			n--;
+		}
+		while(fast.next!=null){
+			prev=curr;
+			curr=curr.next;
+			fast=fast.next;
+		}
+		if(prev==null){
+			head = curr.next;
+			curr.next = null;
 			return;
-		}
-		Node temp = head;
-		while(temp.next.next!=null){
-			temp = temp.next;
-		}
-		tail =temp;
-		System.out.println("\n"+tail.data);
-		temp.next = null;
-	}
-//Delete Middle at index
-	public void deleteAt(int index){
-		if(isEmpty()){
-			return;
-		}
-		if(index==0){
-			deleteStart();
-		}else{
-			Node temp = head;
-			Node prev = null;
-			int t =1;
-			while(t!=index){
-				prev = temp;
-				temp=temp.next;
-				t++;
-			}
-			prev.next = temp.next;
-			temp.next=null;			
 		}
 		
-	}
+		prev.next = curr.next;
+		curr.next=null;
 		
+		
+	}
 }
-	
+
 class Main{
 	public static void main(String [] args){
 		LinkedList list = new LinkedList();
-		for(int i =1;i<5;i++){
+		for(int i =1;i<3;i++){
 			list.insert(i);
 		}
 		
+		
 		System.out.print(list);//explicit to string is invoked
-		list.deleteAt(3);
-		System.out.println("\nDeleted: "+list);		
+		list.removeNth(2);
+		System.out.print("\nDelete:"+list);		
 	}
 }

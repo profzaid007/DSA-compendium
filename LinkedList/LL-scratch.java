@@ -54,7 +54,6 @@ class Main{
 
 		
 		System.out.print(list);//explicit to string is invoked
-		list.reverse();
-		System.out.println("\nreversed:"+list);		
+				
 	}
 }

@@ -13,8 +13,20 @@ class LinkedList{
 	public LinkedList(){
 		head = null;
 	}
-
-//Empty Check	
+//Reverse LinkedList
+	public Node reverserec(Node head){
+		if(head ==null || head.next ==null) return head;
+		Node rest = reverserec(head.next);
+		
+		Node next = head.next;
+		next.next = head;
+		head.next = null;
+		return rest;
+	}
+	public void reverserec(){
+		head = reverserec(head);
+	}
+//Empty CHeck	
 	public boolean isEmpty(){
 		return head == null && tail == null;
 	}
@@ -42,64 +54,19 @@ class LinkedList{
 		}
 		return res.toString();
 	}
-
-//Delete Start
-
-	public void deleteStart(){
-		if(isEmpty()){
-			return;
-		}
-		Node temp = head;
-		head = head.next;
-		temp.next = null;
-	}
-//Delete End
-	
-	public void deleteEnd(){
-		if(head == tail){
-			return;
-		}
-		Node temp = head;
-		while(temp.next.next!=null){
-			temp = temp.next;
-		}
-		tail =temp;
-		System.out.println("\n"+tail.data);
-		temp.next = null;
-	}
-//Delete Middle at index
-	public void deleteAt(int index){
-		if(isEmpty()){
-			return;
-		}
-		if(index==0){
-			deleteStart();
-		}else{
-			Node temp = head;
-			Node prev = null;
-			int t =1;
-			while(t!=index){
-				prev = temp;
-				temp=temp.next;
-				t++;
-			}
-			prev.next = temp.next;
-			temp.next=null;			
-		}
-		
-	}
-		
 }
-	
+
 class Main{
 	public static void main(String [] args){
 		LinkedList list = new LinkedList();
-		for(int i =1;i<5;i++){
+		for(int i =0;i<4;i++){
 			list.insert(i);
 		}
 		
+
+		
 		System.out.print(list);//explicit to string is invoked
-		list.deleteAt(3);
-		System.out.println("\nDeleted: "+list);		
+		list.reverserec();
+		System.out.println("\nreversed:"+list);		
 	}
 }
