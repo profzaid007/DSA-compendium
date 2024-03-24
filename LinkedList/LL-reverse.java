@@ -13,8 +13,24 @@ class LinkedList{
 	public LinkedList(){
 		head = null;
 	}
-
-//Empty Check	
+//Reverse LinkedList
+	public void reverse(){
+		
+		if(head == null || head.next == null) return;
+		Node prev = null;
+		Node  curr = head;
+		Node next = head.next;
+		
+		while(next!=null){
+			curr.next = prev;
+			prev = curr;
+			curr = next;
+			next = next.next;
+		}
+		curr =prev;
+		head = curr;
+	}
+//Empty CHeck	
 	public boolean isEmpty(){
 		return head == null && tail == null;
 	}
