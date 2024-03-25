@@ -13,21 +13,7 @@ class LinkedList{
 	public LinkedList(){
 		head = null;
 	}
-//Reverse LinkedList
-	public Node reverserec(Node head){
-		if(head ==null || head.next ==null) return head;
-		
-		Node rest = reverserec(head.next);
-		Node next = head.next;
-		next.next = head;
-		head.next = null;
-		
-		
-		return rest;
-	}
-	public void reverserec(){
-		head = reverserec(head);
-	}
+
 //Empty Check	
 	public boolean isEmpty(){
 		return head == null && tail == null;
@@ -43,7 +29,7 @@ class LinkedList{
 			tail = node;
 		}
 	}
-//to string @override
+//to string @override// iterative solution
 	public String toString(){
 		Node curr = head;
 		StringBuilder res = new StringBuilder();
@@ -61,14 +47,13 @@ class LinkedList{
 class Main{
 	public static void main(String [] args){
 		LinkedList list = new LinkedList();
-		for(int i =0;i<5;i++){
+		for(int i =0;i<4;i++){
 			list.insert(i);
 		}
 		
 
 		
 		System.out.print(list);//explicit to string is invoked
-		list.reverserec();
-		System.out.println("\nreversed:"+list);		
+				
 	}
 }
