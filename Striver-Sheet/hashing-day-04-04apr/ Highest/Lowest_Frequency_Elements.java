@@ -21,7 +21,6 @@ import java.util.Map.Entry;
 
 class Main{
 	public static int[] getFrequencies(int []v) {
-       Arrays.sort(v);
         HashMap<Integer,Integer> map = new HashMap<>();
 		int [] arr = new int[2];
         for(int i=0;i<v.length;i++){

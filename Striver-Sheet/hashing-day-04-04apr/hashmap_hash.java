@@ -34,11 +34,19 @@ class Main{
 		while(q-- !=0){
 			int a = sc.nextInt();
 			//use if to print zero or the frequency
-			System.out.print(map.get(a)+" ");
+			if(map.get(a)!=null){
+				System.out.print(map.get(a)+" ");
+			}else{
+				System.out.print(0+" ");
+			}
+			
+		}
+		System.out.println("------------");
+		for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+			System.out.println(entry);
 		}
 		
 		
-		
-		System.out.println();
+
 	}
 }
