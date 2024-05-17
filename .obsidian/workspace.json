@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "juicepay/Leetcode Problems.md",
+                "file": "133.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "62f9dca0837bfe69",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "juicepay/Leetcode Problems.md",
+                "file": "133.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "juicepay/Leetcode Problems.md",
+                "file": "133.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "juicepay/Leetcode Problems.md"
+                "file": "133.md"
               }
             }
           }
@@ -149,14 +148,23 @@
   },
   "active": "671ac37db9e78cdf",
   "lastOpenFiles": [
+    "Pasted image 20240507115247.png",
+    "juicepay/Juicepay.md",
+    "133.md",
+    "116 -LC.md",
+    "Pasted image 20240506140051.png",
+    "juicepay/Alien Dictionary.md",
+    "juicepay/99 - LC.md",
+    "juicepay/Disjoint set.md",
+    "juicepay/96 - LC.md",
+    "README.md",
+    "Pasted image 20240502083904.png",
     "Striver-Sheet/Graphs/Bipartite_DFS.java",
     "Striver-Sheet/Graphs/Bipartite_BFS.java",
-    "Pasted image 20240502083904.png",
     "juicepay/LC-207-course-schedule.java",
     "Striver-Sheet/Graphs/Kahn's_topo_1.in",
     "Striver-Sheet/Graphs/Kahn's_topo.java",
     "Striver-Sheet/Graphs/topo_sort_1.in",
-    "Striver-Sheet/Graphs/topo_sort.java",
-    "juicepay/Leetcode Problems.md"
+    "Striver-Sheet/Graphs/topo_sort.java"
   ]
 }

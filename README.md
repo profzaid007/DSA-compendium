@@ -1,1 +1,3 @@
 # DSA-compendium
+[10:03, 5/4/2024] Mohammed Zaid CSE 3RD YR: With the rapid advancement of AI-driven scam messages, characterized by their heightened sophistication and deceptive nature, how does McAfee intend to leverage cutting-edge technologies and methodologies to enhance its capabilities in modern security protocols, particularly in the domain of phishing detection and prevention?
+[10:03, 5/4/2024] Mohammed Zaid CSE 3RD YR: In light of the widespread use of AI in love and matchmaking, which has led to an increase in fake profiles and romance scams, how does McAfee plan to utilize innovative AI-driven technologies to combat the growing challenge of distinguishing genuine interactions from AI-generated ones in the online dating landscape?

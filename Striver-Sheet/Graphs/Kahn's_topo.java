@@ -54,7 +54,7 @@ class Main{
 		for(int i=0;i<=v;i++){
 			System.out.print(i+"->");
 			for(int j=0;j<adj.get(i).size();j++){
-				System.out.print(adj.get(i).get(j)+" ");
+				System.out.print(j+" ");
 			}
 			System.out.println();
 		}
