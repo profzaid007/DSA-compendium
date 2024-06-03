@@ -1,9 +1,9 @@
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.*;
-public class Main{
+public class ThreadSafe_TreeOfSpace{
     static class Node{
-    	String str;
+        String str;
         boolean isLocked;
         int id;
         Node parent;
@@ -11,13 +11,14 @@ public class Main{
         ArrayList<Node> child = new ArrayList<>();
         ReentrantLock lock = new ReentrantLock();
         ArrayList<Node> dsc_lockList = new ArrayList<>();
-        public Node(String s){
-        	this.str=s;
+        Node(String s){
+            this.str = s;
         }
     }
-
+    
+    // O(log N)
     static boolean lock(Node node, int id) {
-
+        // Acquire locks from the root to the current node to maintain global lock ordering
         if (node.isLocked || node.des_locked > 0) {
             return false;
         }
@@ -25,7 +26,7 @@ public class Main{
         Node current = node;
         while (current != null) {
             if (!current.lock.tryLock()) {
-
+                // Failed to acquire lock, release all locks held so far
                 while (!pathToRoot.isEmpty()) {
                     Node cur = pathToRoot.removeLast();
                     cur.lock.unlock();
@@ -40,7 +41,7 @@ public class Main{
             node.isLocked = true;
             node.id = id;
             pathToRoot.removeLast();
-
+            // Update des_locked for all ancestors
 
             while (!pathToRoot.isEmpty()) {
                 Node cur = pathToRoot.pop();
@@ -49,14 +50,14 @@ public class Main{
                 cur.lock.unlock();
             }
         } finally {
-
+            // Release all locks
             node.lock.unlock();
         }
     
         return true;
     }
     
-
+    // O(log N)
     static boolean unlock(Node node, int id) {
         if (!node.isLocked || node.id != id) {
             return false;
@@ -66,7 +67,7 @@ public class Main{
         Node current = node;
         while (current != null) {
             if (!current.lock.tryLock()) {
-
+                // Failed to acquire lock, release all locks held so far
                 while (!pathToRoot.isEmpty()) {
                     pathToRoot.pop().lock.unlock();
                 }
@@ -79,7 +80,7 @@ public class Main{
         try {
             node.isLocked = false;
             node.id = 0;
-
+            // Update des_locked for all ancestors
             pathToRoot.removeLast();
             while (!pathToRoot.isEmpty()) {
                 Node cur = pathToRoot.pop();
@@ -88,7 +89,7 @@ public class Main{
                 cur.lock.unlock();
             }
         } finally {
-
+            // Release all locks
             node.lock.unlock();
         }
 
@@ -96,7 +97,7 @@ public class Main{
         return true;
     }
 
-
+    // O(N log(N))
     static boolean upgrade(Node node, int id) {
         if (node.isLocked || node.des_locked == 0) {
             return false;
@@ -106,6 +107,7 @@ public class Main{
         Node current = node;
         while (current != null) {
             if (!current.lock.tryLock()) {
+                // Failed to acquire lock, release all locks held so far
                 while (!pathToRoot.isEmpty()) {
                     pathToRoot.pop().lock.unlock();
                 }
@@ -117,8 +119,10 @@ public class Main{
         
         try {
             ArrayList<Node> a = node.dsc_lockList;
-
+            // boolean can = getAllChilds(node, a, id);
             if (a.size() == 0) {
+                // Failed to acquire lock, release all locks held so far
+                // System.out.println("here");
                 pathToRoot.removeLast();
                 while (!pathToRoot.isEmpty()) {
                     pathToRoot.pop().lock.unlock();
@@ -129,7 +133,7 @@ public class Main{
                 child.lock.lock();
                 try {
                     if (!child.isLocked || child.id != id) {
-
+                        // Failed to acquire lock, release all locks held so far
                         pathToRoot.removeLast();
                         while (!pathToRoot.isEmpty()) {
                             pathToRoot.pop().lock.unlock();
@@ -141,7 +145,7 @@ public class Main{
                 }
             }    
             node.des_locked = 0;
-           
+            // Unlock all descendants and lock the current node
             for (Node child : a) {
                 child.lock.lock();
                 try {
@@ -160,8 +164,8 @@ public class Main{
 
             node.isLocked = true;
             node.id = id;
-            
-            pathToRoot.removeLast(); 
+            // Update des_locked for all ancestors
+            pathToRoot.removeLast(); // Remove the current node as it's already updated
             while (!pathToRoot.isEmpty()) {
                 Node cur = pathToRoot.pop();
                 cur.des_locked -= a.size() - 1;
@@ -170,7 +174,7 @@ public class Main{
                 cur.lock.unlock();
             }
         } finally {
-
+            // Release all locks
             node.lock.unlock();
         }
 
@@ -211,7 +215,7 @@ public class Main{
             }
         }
 
-
+        // Define a task for processing queries
         class QueryTask implements Runnable {
             private int val;
             private String str;
@@ -233,11 +237,11 @@ public class Main{
                     ans = upgrade(hash.get(str), id);
                 }
                 System.out.println(ans);
-                displayStat(hash);
+                // displayStat(hash);
             }
         }
 
-
+        // Create a thread for each query and start them
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < q; i++) {
             int val = scn.nextInt();
@@ -247,12 +251,12 @@ public class Main{
             QueryTask task = new QueryTask(val, str, id);
             Thread thread = new Thread(task, "Query: "+val+" "+str+" "+id);
             threads.add(thread);
-            thread.start();
         }
 
-        
+        // Wait for all threads to finish
         for (Thread thread : threads) {
             try {
+                thread.start();
                 thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();

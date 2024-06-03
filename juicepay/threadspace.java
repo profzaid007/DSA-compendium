@@ -3,7 +3,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.*;
 public class Main{
     static class Node{
-    	String str;
+        String str;
         boolean isLocked;
         int id;
         Node parent;
@@ -11,13 +11,13 @@ public class Main{
         ArrayList<Node> child = new ArrayList<>();
         ReentrantLock lock = new ReentrantLock();
         ArrayList<Node> dsc_lockList = new ArrayList<>();
-        public Node(String s){
-        	this.str=s;
+        Node(String s){
+            this.str = s;
         }
     }
-
+    
     static boolean lock(Node node, int id) {
-
+        
         if (node.isLocked || node.des_locked > 0) {
             return false;
         }
@@ -25,7 +25,7 @@ public class Main{
         Node current = node;
         while (current != null) {
             if (!current.lock.tryLock()) {
-
+                
                 while (!pathToRoot.isEmpty()) {
                     Node cur = pathToRoot.removeLast();
                     cur.lock.unlock();
@@ -40,7 +40,7 @@ public class Main{
             node.isLocked = true;
             node.id = id;
             pathToRoot.removeLast();
-
+           
 
             while (!pathToRoot.isEmpty()) {
                 Node cur = pathToRoot.pop();
@@ -49,14 +49,14 @@ public class Main{
                 cur.lock.unlock();
             }
         } finally {
-
+           
             node.lock.unlock();
         }
     
         return true;
     }
     
-
+   
     static boolean unlock(Node node, int id) {
         if (!node.isLocked || node.id != id) {
             return false;
@@ -66,7 +66,7 @@ public class Main{
         Node current = node;
         while (current != null) {
             if (!current.lock.tryLock()) {
-
+               
                 while (!pathToRoot.isEmpty()) {
                     pathToRoot.pop().lock.unlock();
                 }
@@ -79,7 +79,7 @@ public class Main{
         try {
             node.isLocked = false;
             node.id = 0;
-
+           
             pathToRoot.removeLast();
             while (!pathToRoot.isEmpty()) {
                 Node cur = pathToRoot.pop();
@@ -88,7 +88,7 @@ public class Main{
                 cur.lock.unlock();
             }
         } finally {
-
+           
             node.lock.unlock();
         }
 
@@ -96,7 +96,7 @@ public class Main{
         return true;
     }
 
-
+   
     static boolean upgrade(Node node, int id) {
         if (node.isLocked || node.des_locked == 0) {
             return false;
@@ -106,6 +106,7 @@ public class Main{
         Node current = node;
         while (current != null) {
             if (!current.lock.tryLock()) {
+               
                 while (!pathToRoot.isEmpty()) {
                     pathToRoot.pop().lock.unlock();
                 }
@@ -117,8 +118,9 @@ public class Main{
         
         try {
             ArrayList<Node> a = node.dsc_lockList;
-
+            
             if (a.size() == 0) {
+                
                 pathToRoot.removeLast();
                 while (!pathToRoot.isEmpty()) {
                     pathToRoot.pop().lock.unlock();
@@ -129,7 +131,7 @@ public class Main{
                 child.lock.lock();
                 try {
                     if (!child.isLocked || child.id != id) {
-
+                        
                         pathToRoot.removeLast();
                         while (!pathToRoot.isEmpty()) {
                             pathToRoot.pop().lock.unlock();
@@ -141,7 +143,7 @@ public class Main{
                 }
             }    
             node.des_locked = 0;
-           
+            
             for (Node child : a) {
                 child.lock.lock();
                 try {
@@ -233,7 +235,7 @@ public class Main{
                     ans = upgrade(hash.get(str), id);
                 }
                 System.out.println(ans);
-                displayStat(hash);
+
             }
         }
 
@@ -247,12 +249,12 @@ public class Main{
             QueryTask task = new QueryTask(val, str, id);
             Thread thread = new Thread(task, "Query: "+val+" "+str+" "+id);
             threads.add(thread);
-            thread.start();
         }
 
-        
+
         for (Thread thread : threads) {
             try {
+                thread.start();
                 thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -262,14 +264,6 @@ public class Main{
         scn.close();
     }
     
-    public static void displayStat(HashMap<String, Node> hash) {
-        System.out.println("==============");
-        for (String key : hash.keySet()) {
-            System.out.println(
-                    key + " " + hash.get(key).isLocked + " " + hash.get(key).id + " " + hash.get(key).des_locked);
-        }
-        System.out.println("==============");
-    }
 }
     
 
