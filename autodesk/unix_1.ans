@@ -1,0 +1,5 @@
+String temp = arr[i];
+				if(temp.charAt(0)=='!'){
+					int index = Integer.parseInt(temp.substring(1));
+					temp = arr[index];
+				}
