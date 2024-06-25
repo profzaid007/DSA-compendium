@@ -22,7 +22,7 @@ public class Main{
 		ArrayList<ArrayList<Pair>> adj = new ArrayList<ArrayList<Pair>>();
 		
 		for(int i=0;i<b;i++){
-			adj.add(new ArrayList<new Pair>());
+			adj.add(new ArrayList<new Pair()>();
 		}
 		System.out.println();
 	}

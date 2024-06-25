@@ -20,7 +20,7 @@ public class Main {
             }
         }
 
-        // Find the branch with the largest number of files
+
         int maxFiles = -1;
         String resultBranch = null;
 
@@ -48,6 +48,6 @@ public class Main {
             "push file2",
             "push file3"
         };
-        System.out.println(solution(logs));  // Output should be "issue2"
+        System.out.println(solution(logs));  
     }
 }
